@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pl">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Materiały — katalog</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="app">
+			<header class="topbar">
+				<div id="pathLabel" class="path" aria-label="Ścieżka"></div>
+				<div class="actions">
+					<button id="backBtn" class="ghost" aria-label="Wstecz">Wstecz</button>
+					<button id="homeBtn" class="ghost" aria-label="Start">⌂</button>
+				</div>
+			</header>
+
+			<main class="content">
+				<section id="browser" class="browser" aria-hidden="false">
+					<div class="search">
+						<input
+							id="searchInput"
+							type="search"
+							placeholder="Szukaj materiału..."
+							autocomplete="off"
+						/>
+						<button id="clearSearch" type="button">Wyczyść</button>
+					</div>
+					<div id="grid" class="grid" role="list"></div>
+				</section>
+			</main>
+		</div>
+
+		<div id="lightbox" class="lightbox" aria-hidden="true">
+			<div class="lightbox-content">
+				<img id="lightboxImg" alt="" />
+				<div id="lightboxCaption" class="caption"></div>
+			</div>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
+</html>
