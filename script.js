@@ -176,6 +176,7 @@ const clearSearch = document.getElementById("clearSearch");
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
 const lightboxCaption = document.getElementById("lightboxCaption");
+const lightboxDownload = document.getElementById("lightboxDownload");
 
 let inactivityTimer = null;
 const INACTIVITY_MS = 10 * 60 * 1000;
@@ -331,7 +332,17 @@ const renderImages = (images, basePath = null) => {
     label.className = "label";
     label.textContent = formatLabel(file);
 
+    const download = document.createElement("a");
+    download.className = "download-btn";
+    download.href = imgPath;
+    download.download = file;
+    download.textContent = "Pobierz";
+    download.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+
     card.appendChild(img);
+    card.appendChild(download);
     card.appendChild(label);
     card.addEventListener("click", () => openLightbox(imgPath, label.textContent));
     grid.appendChild(card);
@@ -342,12 +353,15 @@ const openLightbox = (src, caption) => {
   lightboxImg.src = src;
   lightboxImg.alt = caption;
   lightboxCaption.textContent = caption;
+  lightboxDownload.href = src;
+  lightboxDownload.setAttribute("download", caption);
   lightbox.setAttribute("aria-hidden", "false");
 };
 
 const closeLightbox = () => {
   lightbox.setAttribute("aria-hidden", "true");
   lightboxImg.src = "";
+  lightboxDownload.href = "#";
 };
 
 const render = () => {
@@ -380,7 +394,17 @@ const render = () => {
       label.className = "label";
       label.textContent = `${formatLabel(file)} — ${path.join(" / ")}`;
 
+      const download = document.createElement("a");
+      download.className = "download-btn";
+      download.href = imgPath;
+      download.download = file;
+      download.textContent = "Pobierz";
+      download.addEventListener("click", (event) => {
+        event.stopPropagation();
+      });
+
       card.appendChild(img);
+      card.appendChild(download);
       card.appendChild(label);
       card.addEventListener("click", () => openLightbox(imgPath, label.textContent));
       grid.appendChild(card);
