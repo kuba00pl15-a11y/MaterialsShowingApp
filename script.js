@@ -177,6 +177,9 @@ const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
 const lightboxCaption = document.getElementById("lightboxCaption");
 
+let inactivityTimer = null;
+const INACTIVITY_MS = 10 * 60 * 1000;
+
 const encodePath = (segments) =>
   segments.map((segment) => encodeURIComponent(segment)).join("/");
 
@@ -216,6 +219,19 @@ const goTo = (nextPath, nextHome = false) => {
   state.path = [...nextPath];
   state.atHome = nextHome;
   render();
+};
+
+const resetInactivityTimer = () => {
+  if (inactivityTimer) {
+    clearTimeout(inactivityTimer);
+  }
+  inactivityTimer = setTimeout(() => {
+    if (!state.atHome || state.path.length > 0 || state.query) {
+      state.query = "";
+      searchInput.value = "";
+      goTo([], true);
+    }
+  }, INACTIVITY_MS);
 };
 
 const updatePathLabel = () => {
@@ -427,10 +443,19 @@ render();
 searchInput.addEventListener("input", (event) => {
   state.query = event.target.value.trim();
   render();
+  resetInactivityTimer();
 });
 
 clearSearch.addEventListener("click", () => {
   state.query = "";
   searchInput.value = "";
   render();
+  resetInactivityTimer();
 });
+
+const activityEvents = ["click", "touchstart", "keydown", "mousemove", "scroll"];
+activityEvents.forEach((eventName) => {
+  window.addEventListener(eventName, resetInactivityTimer, { passive: true });
+});
+
+resetInactivityTimer();
