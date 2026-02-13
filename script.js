@@ -436,17 +436,19 @@ const renderImages = (images, basePath = null) => {
     card.appendChild(img);
     card.appendChild(download);
     card.appendChild(label);
-    card.addEventListener("click", () => openLightbox(imgPath, label.textContent));
+    card.addEventListener("click", () =>
+      openLightbox(imgPath, label.textContent, file)
+    );
     grid.appendChild(card);
   });
 };
 
-const openLightbox = (src, caption) => {
+const openLightbox = (src, caption, fileName = "") => {
   lightboxImg.src = src;
   lightboxImg.alt = caption;
   lightboxCaption.textContent = caption;
   lightboxDownload.href = src;
-  lightboxDownload.setAttribute("download", caption);
+  lightboxDownload.setAttribute("download", fileName || caption);
   lightbox.setAttribute("aria-hidden", "false");
 };
 
@@ -498,7 +500,9 @@ const render = () => {
       card.appendChild(img);
       card.appendChild(download);
       card.appendChild(label);
-      card.addEventListener("click", () => openLightbox(imgPath, label.textContent));
+      card.addEventListener("click", () =>
+        openLightbox(imgPath, label.textContent, file)
+      );
       grid.appendChild(card);
     });
     triggerGridAnimation();
