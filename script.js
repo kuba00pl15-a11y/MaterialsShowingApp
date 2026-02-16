@@ -372,7 +372,10 @@ const updatePathLabel = () => {
 
 const renderTiles = (node) => {
   grid.innerHTML = "";
-  Object.keys(node).forEach((key) => {
+  const keys = Object.keys(node);
+  grid.classList.add("tiles-view");
+  grid.classList.toggle("tiles-3", keys.length === 3);
+  keys.forEach((key) => {
     const tile = document.createElement("button");
     tile.className = "tile";
     tile.setAttribute("role", "listitem");
@@ -391,6 +394,8 @@ const renderTiles = (node) => {
 
 const renderHomeTile = () => {
   grid.innerHTML = "";
+  grid.classList.add("tiles-view");
+  grid.classList.remove("tiles-3");
   const tile = document.createElement("button");
   tile.className = "tile";
   tile.setAttribute("role", "listitem");
@@ -407,6 +412,7 @@ const renderHomeTile = () => {
 
 const renderImages = (images, basePath = null) => {
   grid.innerHTML = "";
+  grid.classList.remove("tiles-view", "tiles-3");
   const pathSegments = basePath ?? ["data", ...state.path];
   images.forEach((file) => {
     const card = document.createElement("div");
@@ -466,6 +472,7 @@ const render = () => {
       formatLabel(file).toLowerCase().includes(state.query.toLowerCase())
     );
     grid.classList.remove("single");
+    grid.classList.remove("tiles-view", "tiles-3");
     state.atImages = true;
     updateBackButton();
     updatePathLabel();

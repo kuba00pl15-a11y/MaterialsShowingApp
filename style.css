@@ -189,6 +189,10 @@ body {
 	justify-content: center;
 }
 
+.grid.tiles-3 {
+	grid-template-columns: repeat(3, minmax(240px, 1fr));
+}
+
 @keyframes slideIn {
 	0% {
 		opacity: 0;
@@ -403,6 +407,10 @@ body {
 		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 	}
 
+	.grid.tiles-3 {
+		grid-template-columns: repeat(3, minmax(220px, 1fr));
+	}
+
 	.grid.single {
 		grid-template-columns: minmax(300px, 1fr);
 	}
@@ -443,6 +451,10 @@ body {
 	.grid {
 		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 		gap: 20px;
+	}
+
+	.grid.tiles-3 {
+		grid-template-columns: repeat(2, minmax(200px, 1fr));
 	}
 
 	.tile {
